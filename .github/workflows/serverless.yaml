@@ -3,7 +3,7 @@ name: Serverless Deploy
 on:
   workflow_dispatch:
   push:
-    branches: [develop, staging, master]
+    branches: [master]
 
 jobs:
   deploy:
