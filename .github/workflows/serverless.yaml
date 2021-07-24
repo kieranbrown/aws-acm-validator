@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        region: [us-east-1, eu-west-2]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,7 +20,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: ${{ matrix.region }}
 
       - uses: actions/cache@v2
         with:
@@ -32,4 +35,4 @@ jobs:
       - name: Serverless Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: npx serverless deploy
+        run: npx serverless deploy --region ${{ matrix.region }}
