@@ -1,0 +1,31 @@
+service: aws-acm-validator
+useDotenv: true
+
+provider:
+  name: aws
+  region: eu-west-2
+  stage: prod
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  eventBridge:
+    useCloudFormation: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: [acm:DescribeCertificate]
+          Resource: '*'
+
+functions:
+  validate:
+    handler: validate.handler
+    environment:
+      CLOUDFLARE_API_TOKEN: ${env:CLOUDFLARE_API_TOKEN}
+    events:
+      - eventBridge:
+          pattern:
+            source: [aws.acm]
+            detail-type: [AWS API Call via CloudTrail]
+            detail:
+              eventSource: [acm.amazonaws.com]
+              eventName: [RequestCertificate]

@@ -1,0 +1,7 @@
+{
+  "name": "aws-acm-validator",
+  "dependencies": {
+    "@aws-sdk/client-acm": "^3.23.0",
+    "cloudflare": "^2.7.0"
+  }
+}
