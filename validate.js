@@ -24,12 +24,18 @@ module.exports.handler = async function (event) {
   }
 
   for (const validation of certificate.Certificate.DomainValidationOptions) {
-    if (validation.ValidationMethod === 'DNS') {
+    if (validation.ValidationMethod !== 'DNS') {
+      continue;
+    }
+
+    try {
       await cloudflare.dnsRecords.add(zone.id, {
         name: validation.ResourceRecord.Name,
         content: validation.ResourceRecord.Value,
         type: validation.ResourceRecord.Type,
       });
+    } catch (e) {
+      console.error(e);
     }
   }
 }

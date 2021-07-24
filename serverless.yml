@@ -13,7 +13,7 @@ provider:
     role:
       statements:
         - Effect: Allow
-          Action: [acm:DescribeCertificate]
+          Action: acm:DescribeCertificate
           Resource: '*'
 
 functions:
