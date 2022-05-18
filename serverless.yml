@@ -5,16 +5,13 @@ provider:
   name: aws
   region: eu-west-2
   stage: prod
-  runtime: nodejs14.x
-  lambdaHashingVersion: 20201221
-  eventBridge:
-    useCloudFormation: true
+  runtime: nodejs16.x
   iam:
     role:
       statements:
         - Effect: Allow
           Action: acm:DescribeCertificate
-          Resource: '*'
+          Resource: "*"
 
 functions:
   validate:
