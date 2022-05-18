@@ -6,6 +6,7 @@ provider:
   region: eu-west-2
   stage: prod
   runtime: nodejs16.x
+  architecture: arm64
   iam:
     role:
       statements:
