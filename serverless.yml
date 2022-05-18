@@ -7,6 +7,9 @@ provider:
   stage: prod
   runtime: nodejs16.x
   architecture: arm64
+  stackTags:
+    app: ${self:service}
+    stage: ${sls:stage}
   iam:
     role:
       statements:
